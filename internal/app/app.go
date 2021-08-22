@@ -2,36 +2,25 @@ package app
 
 import (
 	"context"
-	"strings"
-
-	"github.com/common-go/health"
-	"github.com/common-go/log"
-	"github.com/common-go/mongo"
-	sv "github.com/common-go/service/v10"
-	"github.com/google/uuid"
+	"github.com/core-go/health"
+	"github.com/core-go/log"
+	"github.com/core-go/mongo"
+	"github.com/core-go/service/uuid"
+	sv "github.com/core-go/service/v10"
 
 	"go-service/internal/handlers"
 	"go-service/internal/location"
 	"go-service/internal/services"
 )
 
-func randomId() string {
-	id := uuid.New()
-	return strings.Replace(id.String(), "-", "", -1)
-}
-func generateId(ctx context.Context) (string, error) {
-	id := randomId()
-	return id, nil
-}
-
 type ApplicationContext struct {
-	HealthHandler   *health.HealthHandler
+	HealthHandler   *health.Handler
 	UserHandler     *handlers.UserHandler
 	LocationHandler *location.LocationHandler
 }
 
 func NewApp(ctx context.Context, mongoConfig mongo.MongoConfig) (*ApplicationContext, error) {
-	db, err := mongo.SetupMongo(ctx, mongoConfig)
+	db, err := mongo.Setup(ctx, mongoConfig)
 	if err != nil {
 		return nil, err
 	}
@@ -42,11 +31,10 @@ func NewApp(ctx context.Context, mongoConfig mongo.MongoConfig) (*ApplicationCon
 	userHandler := handlers.NewUserHandler(userService, validator.Validate, logError)
 
 	locationService := location.NewLocationService(db)
-	locationHandler := location.NewLocationHandler(locationService, generateId, validator.Validate, logError)
+	locationHandler := location.NewLocationHandler(locationService, uuid.Generate, validator.Validate, logError)
 
 	mongoChecker := mongo.NewHealthChecker(db)
-	checkers := []health.HealthChecker{mongoChecker}
-	healthHandler := health.NewHealthHandler(checkers)
+	healthHandler := health.NewHandler(mongoChecker)
 
 	return &ApplicationContext{
 		HealthHandler: healthHandler,

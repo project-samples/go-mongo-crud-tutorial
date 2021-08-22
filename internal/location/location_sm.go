@@ -1,6 +1,6 @@
 package location
 
-import "github.com/common-go/search"
+import "github.com/core-go/search"
 
 type LocationSM struct {
 	*search.SearchModel

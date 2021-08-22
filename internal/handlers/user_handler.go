@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"reflect"
 
-	"github.com/common-go/search"
-	sv "github.com/common-go/service"
+	"github.com/core-go/search"
+	sv "github.com/core-go/service"
 
 	. "go-service/internal/models"
 	. "go-service/internal/search-models"

@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/common-go/search"
-	"github.com/common-go/service"
+	"github.com/core-go/search"
+	"github.com/core-go/service"
 )
 
 type UserService interface {

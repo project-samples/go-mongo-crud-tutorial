@@ -1,7 +1,7 @@
 package location
 
 import (
-	"github.com/common-go/mongo"
+	"github.com/core-go/mongo"
 	"time"
 )
 

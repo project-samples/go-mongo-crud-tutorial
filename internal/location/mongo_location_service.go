@@ -5,10 +5,10 @@ import (
 
 	"go.mongodb.org/mongo-driver/mongo"
 
-	m "github.com/common-go/mongo"
-	"github.com/common-go/mongo/query"
-	"github.com/common-go/search"
-	"github.com/common-go/service"
+	m "github.com/core-go/mongo"
+	"github.com/core-go/mongo/query"
+	"github.com/core-go/search"
+	"github.com/core-go/service"
 )
 
 type MongoLocationService struct {
